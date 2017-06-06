@@ -9,7 +9,12 @@ public class QueryString {
 	 */
 	public static String getRestaurantList() {
 
-		String query = "SELECT restaurant_info.r_id, restaurant_info.r_name, restaurant_address.r_address, restaurant_contact_info.r_phone_number FROM restaurant_info INNER JOIN restaurant_address ON restaurant_address.restaurant_info_r_id=restaurant_info.r_id INNER JOIN restaurant_contact_info on restaurant_contact_info.restaurant_info_r_id=restaurant_info.r_id";
+		String query = "SELECT restaurant_info.r_id, restaurant_info.r_name, "
+				+ "restaurant_address.r_address, restaurant_contact_info.r_phone_number FROM "
+				+ "restaurant_info INNER JOIN restaurant_address ON "
+				+ "restaurant_address.restaurant_info_r_id=restaurant_info.r_id "
+				+ "INNER JOIN restaurant_contact_info ON "
+				+ "restaurant_contact_info.restaurant_info_r_id=restaurant_info.r_id";
 
 		return query;
 	}
@@ -25,11 +30,11 @@ public class QueryString {
 		String query = new String();
 		switch (stringPosition) {
 		case 0:
-			query = "SELECT restaurant_info.r_id, restaurant_info.r_name, restaurant_address.r_address, "
-					+ "restaurant_contact_info.r_phone_number FROM restaurant_info INNER JOIN restaurant_address "
-					+ "ON restaurant_address.restaurant_info_r_id=restaurant_info.r_id INNER JOIN restaurant_contact_info "
-					+ "on restaurant_contact_info.restaurant_info_r_id=restaurant_info.r_id WHERE restaurant_info.r_type_of_res "
-					+ "LIKE '%" + anySingleQuery + "%'";
+				query = "SELECT restaurant_info.r_id, restaurant_info.r_name, restaurant_address.r_address, "
+						+ "restaurant_contact_info.r_phone_number FROM restaurant_info INNER JOIN restaurant_address "
+						+ "ON restaurant_address.restaurant_info_r_id=restaurant_info.r_id INNER JOIN restaurant_contact_info "
+						+ "on restaurant_contact_info.restaurant_info_r_id=restaurant_info.r_id WHERE restaurant_info.r_type_of_res "
+						+ "LIKE '%" + anySingleQuery + "%'";
 			break;
 		case 1:
 			query = "SELECT restaurant_info.r_id, restaurant_info.r_name, restaurant_address.r_address, "

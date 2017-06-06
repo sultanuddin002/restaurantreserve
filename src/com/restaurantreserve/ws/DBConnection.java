@@ -76,6 +76,63 @@ public class DBConnection {
 
 	}
 
+	public static JSONArray getResturantList(String anySingleQuery, int stringPosition) throws Exception, SQLException {
+		JSONArray array = new JSONArray();
+		Connection dbCon = null;
+		try {
+			try {
+				dbCon = DBConnection.createConnection();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Statement statement = dbCon.createStatement();
+			String query = QueryString.getResturantList(anySingleQuery, stringPosition);
+			ResultSet resultSet = statement.executeQuery(query);
+			array = Utility.convert(resultSet);
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+			throw e;
+		} finally {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+		}
+		return array;
+	}
+
+	public static JSONArray getResturantList(String firstString, String secondString, int stringPosition1,
+			int stringPosition2) throws Exception, SQLException {
+		JSONArray array = new JSONArray();
+		Connection dbCon = null;
+		try {
+			try {
+				dbCon = DBConnection.createConnection();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Statement statement = dbCon.createStatement();
+			String query = QueryString.getResturantList(firstString, secondString, stringPosition1, stringPosition2);
+			ResultSet resultSet = statement.executeQuery(query);
+			array = Utility.convert(resultSet);
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+			throw e;
+		} finally {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+		}
+		return array;
+	}
+
 	public static JSONArray getRestaurantList() throws Exception, SQLException {
 		JSONArray array = new JSONArray();
 		Connection dbCon = null;

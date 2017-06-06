@@ -23,6 +23,15 @@ public class Utility {
 	}
 
 	/**
+	 * 
+	 * @param text
+	 * @return
+	 */
+	public static boolean isNull(String text) {
+		return text.trim().contains("") ? true : false;
+	}
+
+	/**
 	 * Method to construct JSON
 	 * 
 	 * @param tag
