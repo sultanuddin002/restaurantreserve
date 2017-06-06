@@ -161,4 +161,32 @@ public class DBConnection {
 		return array;
 
 	}
+
+	public static JSONArray getRestaurantDetail(int rId) throws Exception, SQLException {
+		JSONArray array = new JSONArray();
+		Connection dbCon = null;
+		try {
+			try {
+				dbCon = DBConnection.createConnection();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Statement statement = dbCon.createStatement();
+			String query = QueryString.getRestaurantDetail(rId);
+			ResultSet resultSet = statement.executeQuery(query);
+			array = Utility.convert(resultSet);
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+			throw e;
+		} finally {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+		}
+		return array;
+	}
 }
