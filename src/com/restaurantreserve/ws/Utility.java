@@ -22,6 +22,10 @@ public class Utility {
 		return text != null && text.trim().length() > 0 ? true : false;
 	}
 
+	public static boolean isNull(String text) {
+		return text.trim().contains("") ? true : false;
+	}
+
 	/**
 	 * Method to construct JSON
 	 * 

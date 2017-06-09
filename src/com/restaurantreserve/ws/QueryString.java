@@ -3,7 +3,7 @@ package com.restaurantreserve.ws;
 public class QueryString {
 
 	// for all result query
-	
+
 	/**
 	 * @return
 	 */
@@ -14,14 +14,14 @@ public class QueryString {
 		return query;
 	}
 
-//	for any single search query
-	
+	// for any single search query
+
 	/**
 	 * @param anySingleQuery
 	 * @param stringPosition
 	 * @return
 	 */
-	public static String getResturantList(String anySingleQuery, int stringPosition) {
+	public static String getRestaurantList(String anySingleQuery, int stringPosition) {
 		String query = new String();
 		switch (stringPosition) {
 		case 0:
@@ -51,8 +51,8 @@ public class QueryString {
 
 		return query;
 	}
-// for any 2 search query
-	
+	// for any 2 search query
+
 	/**
 	 * @param firstString
 	 * @param secondString
@@ -60,7 +60,7 @@ public class QueryString {
 	 * @param stringPosition2
 	 * @return
 	 */
-	public static String getResturantList(String firstString, String secondString,
+	public static String getRestaurantList(String firstString, String secondString,
 			int stringPosition1, int stringPosition2) {
 		// there are 3 possibility like of below
 		String query = new String();
@@ -92,12 +92,12 @@ public class QueryString {
 					+ "restaurant_info.r_name LIKE '%" + firstString
 					+ "%' AND restaurant_address.r_area_address LIKE '%" + secondString + "%'";
 		}
-		
+
 		return query;
 	}
 
 	// for all search query
-	
+
 	/**
 	 * @param typeOfRes
 	 * @param nameOfRes
@@ -114,6 +114,27 @@ public class QueryString {
 				+ "restaurant_info.r_type_of_res LIKE '%" + typeOfRes
 				+ "%' AND restaurant_info.r_name LIKE '%" + nameOfRes
 				+ "%' AND restaurant_address.r_area_address LIKE '%" + areaOfLocation + "%'";
+
+		return query;
+	}
+
+	// get restaurant details by passing restaurant id
+
+	/**
+	 * 
+	 * @param restaurantId
+	 * @return
+	 */
+	public static String getRestaurantDetail(int restaurantId) {
+		String query = "SELECT restaurant_info.r_name, restaurant_info.r_type_of_res, restaurant_info.r_days_open_per_week,"
+				+ " restaurant_info.r_rating, restaurant_info.r_menu_uploaded, restaurant_info.r_has_special_offer,"
+				+ " restaurant_address.r_address, restaurant_address.r_area_address, restaurant_address.r_gps_loc, "
+				+ "restaurant_contact_info.r_email, restaurant_contact_info.r_facebook_page_link,"
+				+ "restaurant_contact_info.r_phone_number, restaurant_contact_info.r_website "
+				+ "FROM restaurant_info INNER JOIN restaurant_address ON "
+				+ "restaurant_address.restaurant_info_r_id=restaurant_info.r_id "
+				+ "INNER JOIN restaurant_contact_info ON restaurant_contact_info.restaurant_info_r_id=restaurant_info.r_id "
+				+ "WHERE restaurant_info.r_id='" + restaurantId + "'";
 
 		return query;
 	}
