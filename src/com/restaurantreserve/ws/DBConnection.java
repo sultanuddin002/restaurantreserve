@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
 
 public class DBConnection {
 
@@ -27,7 +28,7 @@ public class DBConnection {
 			con = DriverManager.getConnection(Constants.dbUrl, Constants.dbUser,
 					Constants.dbPassword);
 		} catch (Exception e) {
-			// TODO: handle exception
+
 		} finally {
 			return con;
 		}
@@ -119,7 +120,8 @@ public class DBConnection {
 				e.printStackTrace();
 			}
 			Statement statement = dbCon.createStatement();
-			String query = QueryString.getRestaurantList(firstString, secondString, stringPosition1, stringPosition2);
+			String query = QueryString.getRestaurantList(firstString, secondString, stringPosition1,
+					stringPosition2);
 			ResultSet resultSet = statement.executeQuery(query);
 			array = Utility.convert(resultSet);
 		} catch (SQLException sqle) {
@@ -165,8 +167,8 @@ public class DBConnection {
 		return array;
 
 	}
-	
-	public static JSONArray getRestaurantDetail(int restaurantId) throws Exception, SQLException{
+
+	public static JSONArray getRestaurantDetail(int restaurantId) throws Exception, SQLException {
 		JSONArray array = new JSONArray();
 		Connection dbCon = null;
 		try {
@@ -192,6 +194,120 @@ public class DBConnection {
 			}
 		}
 		return array;
-		
+
+	}
+
+
+	public static String setUserData(String fullName, String phoneNumber, String email,
+			String comment, String date, String time, String partySize, int restaurantId,
+			String restaurantName) throws Exception, SQLException {
+		String response = new String();
+		boolean success = false;
+		Connection dbCon = null;
+		try {
+			try {
+				dbCon = DBConnection.createConnection();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Statement statement = dbCon.createStatement();
+			String query = QueryString.setUserData(fullName, phoneNumber, email, comment);
+			int value = statement.executeUpdate(query);
+			if (value != 0) {
+				success = true;
+				response = "success";
+			}
+//			response = Utility.constructJSON("Success", success);
+
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+			throw e;
+		} finally {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+		}
+		return response;
+
+	}
+
+
+	public static String setRestaurantBooking(String date, String time, String partySize,
+			String fullName, String phoneNumber, int restaurantId, String restaurantName)
+			throws Exception, SQLException {
+		String response = new String();
+		boolean success = false;
+		Connection dbCon = null;
+		try {
+			try {
+				dbCon = DBConnection.createConnection();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Statement statement = dbCon.createStatement();
+			String query = QueryString.setRestaurantBooking(date, time, partySize, fullName,
+					phoneNumber, restaurantId, restaurantName);
+			int value = statement.executeUpdate(query);
+			if (value != 0) {
+				success = true;
+				response = "success";
+			}
+//			response = Utility.constructJSON("Success", success);
+
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+			throw e;
+		} finally {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+		}
+		return response;
+
+	}
+
+	public static JSONObject getBookingId(String date, String time, String phoneNumber)
+			throws Exception, SQLException {
+		String response = new String();
+		JSONObject object = new JSONObject();
+		JSONArray array = new JSONArray();
+		boolean isSuccess = false;
+		Connection dbCon = null;
+		try {
+			try {
+				dbCon = DBConnection.createConnection();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Statement statement = dbCon.createStatement();
+			String query = QueryString.getBookingId(date, time, phoneNumber);
+			ResultSet resultSet = statement.executeQuery(query);
+			array = Utility.convert(resultSet);
+			if(array.length() == 1){
+			object = array.getJSONObject(0);	
+			}			
+
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+			throw e;
+		} finally {
+			if (dbCon != null) {
+				dbCon.close();
+			}
+		}
+		return object;
+
 	}
 }

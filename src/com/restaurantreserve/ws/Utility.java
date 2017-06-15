@@ -40,7 +40,6 @@ public class Utility {
 			jsonObject.put("tag", tag);
 			jsonObject.put("status", new Boolean(status));
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		return jsonObject.toString();
 	}
@@ -60,7 +59,6 @@ public class Utility {
 			obj.put("status", status);
 			obj.put("error_msg", err_msg);
 		} catch (JSONException e) {
-			// TODO: handle exception
 		}
 		return obj.toString();
 	}

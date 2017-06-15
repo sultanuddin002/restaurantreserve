@@ -139,4 +139,31 @@ public class QueryString {
 		return query;
 	}
 
+
+	public static String setUserData(String fullName, String phoneNumber, String email,
+			String comment) {
+		String query = "INSERT INTO user_data VALUES (null,'" + fullName + "','" + phoneNumber
+				+ "','" + email + "','" + comment + "');";
+
+		return query;
+	}
+
+	public static String setRestaurantBooking(String date, String time, String partySize,
+			String fullName, String phoneNumber, int restaurantId, String restaurantName) {
+		String query = "INSERT INTO user_booking VALUES ('" + time + "','" + date + "',false,"
+				+ partySize + ",null,false,false,false,"
+				+ "(SELECT user_data.u_id FROM user_data WHERE user_data.u_full_name = '" + fullName
+				+ "' AND user_data.u_phone_number = '" + phoneNumber + "')" + ",'" + phoneNumber
+				+ "'," + restaurantId + ",'" + restaurantName + "');";
+		
+		return query;
+	}
+
+	public static String getBookingId(String date, String time, String phoneNumber) {
+		String query = "SELECT user_booking.b_no FROM user_booking WHERE user_booking.b_date LIKE '"
+				+ date + "' AND user_booking.b_time LIKE '" + time + "' AND "
+				+ "user_booking.user_data_u_phone_number LIKE '" + phoneNumber + "'";
+
+		return query;
+	}
 }
